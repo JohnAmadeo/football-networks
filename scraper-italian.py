@@ -65,16 +65,16 @@ def get_team_ids():
     # Top 2 leagues in England, Italy, Germany, and Span
     # Top league in France, Netherlands
     league_urls = [
-        'https://www.worldfootball.net/players/eng-premier-league-2018-2019/',
-        'https://www.worldfootball.net/players/eng-championship-2018-2019/',
-        'https://www.worldfootball.net/players/bundesliga-2018-2019/',
-        'https://www.worldfootball.net/players/2-bundesliga-2018-2019/',
-        'https://www.worldfootball.net/players/fra-ligue-1-2018-2019/',
+        # 'https://www.worldfootball.net/players/eng-premier-league-2018-2019/',
+        # 'https://www.worldfootball.net/players/eng-championship-2018-2019/',
+        # 'https://www.worldfootball.net/players/bundesliga-2018-2019/',
+        # 'https://www.worldfootball.net/players/2-bundesliga-2018-2019/',
+        # 'https://www.worldfootball.net/players/fra-ligue-1-2018-2019/',
         'https://www.worldfootball.net/players/ita-serie-a-2018-2019/',
-        'https://www.worldfootball.net/players/ita-serie-b-2018-2019/',
-        'https://www.worldfootball.net/players/esp-primera-division-2018-2019/',
-        'https://www.worldfootball.net/players/esp-segunda-division-2018-2019/',
-        'https://www.worldfootball.net/players/ned-eredivisie-2018-2019/'
+        'https://www.worldfootball.net/players/ita-serie-b-2018-2019/'#,
+        # 'https://www.worldfootball.net/players/esp-primera-division-2018-2019/',
+        # 'https://www.worldfootball.net/players/esp-segunda-division-2018-2019/',
+        # 'https://www.worldfootball.net/players/ned-eredivisie-2018-2019/'
     ]
 
     team_ids = []
@@ -96,5 +96,5 @@ def get_team_ids():
 
 
 players = get_players()
-with open('players.json', 'w') as f:       
+with open('italian-players.json', 'w') as f:       
     json.dump(players, f)

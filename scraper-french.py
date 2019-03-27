@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
+
 def get_players(team=None, year=None):
     # scrape players across all teams and years
     if team == None and year == None:
@@ -12,7 +13,7 @@ def get_players(team=None, year=None):
             team_players = get_players(team=team)
             players[team] = team_players
             print('Checkpoint: Done getting players from ' + team)
-        
+
         return players
 
     # scrape a team's players across all year
@@ -24,17 +25,19 @@ def get_players(team=None, year=None):
             if not success:
                 break
             players[year] = player
-            print('Checkpoint: Done getting ' + team + ' players from ' + str(year))
+            print('Checkpoint: Done getting ' +
+                  team + ' players from ' + str(year))
 
-        return players 
+        return players
 
-    # error state 
+    # error state
     elif team == None and year != None:
         return Exception('Cannot specify a year if team is not specified')
 
     # scrape the player for a particular team and year
-    else: 
-        resp = requests.get('https://www.worldfootball.net/teams/' + team + '/' + str(year) + '/2/')
+    else:
+        resp = requests.get(
+            'https://www.worldfootball.net/teams/' + team + '/' + str(year) + '/2/')
         if resp.status_code != 200:
             return [], False
 
@@ -61,27 +64,28 @@ def get_players(team=None, year=None):
 
         return player, True
 
+
 def get_team_ids():
     # Top 2 leagues in England, Italy, Germany, and Span
     # Top league in France, Netherlands
     league_urls = [
-        'https://www.worldfootball.net/players/eng-premier-league-2018-2019/',
-        'https://www.worldfootball.net/players/eng-championship-2018-2019/',
-        'https://www.worldfootball.net/players/bundesliga-2018-2019/',
-        'https://www.worldfootball.net/players/2-bundesliga-2018-2019/',
+        # 'https://www.worldfootball.net/players/eng-premier-league-2018-2019/',
+        # 'https://www.worldfootball.net/players/eng-championship-2018-2019/',
+        # 'https://www.worldfootball.net/players/bundesliga-2018-2019/',
+        # 'https://www.worldfootball.net/players/2-bundesliga-2018-2019/',
         'https://www.worldfootball.net/players/fra-ligue-1-2018-2019/',
-        'https://www.worldfootball.net/players/ita-serie-a-2018-2019/',
-        'https://www.worldfootball.net/players/ita-serie-b-2018-2019/',
-        'https://www.worldfootball.net/players/esp-primera-division-2018-2019/',
-        'https://www.worldfootball.net/players/esp-segunda-division-2018-2019/',
-        'https://www.worldfootball.net/players/ned-eredivisie-2018-2019/'
+        # 'https://www.worldfootball.net/players/ita-serie-a-2018-2019/',
+        # 'https://www.worldfootball.net/players/ita-serie-b-2018-2019/',
+        # 'https://www.worldfootball.net/players/esp-primera-division-2018-2019/',
+        # 'https://www.worldfootball.net/players/esp-segunda-division-2018-2019/',
+        # 'https://www.worldfootball.net/players/ned-eredivisie-2018-2019/'
     ]
 
     team_ids = []
     for url in league_urls:
         resp = requests.get(url)
         html = BeautifulSoup(resp.content, 'html.parser')
-        
+
         teams_table = None
         for table in html.find_all(class_='standard_tabelle'):
             if len(table.find_all(string=['player', 'Matches'])) > 0:
@@ -91,10 +95,10 @@ def get_team_ids():
         for tr in teams_table.find_all('tr'):
             url = tr.find_all('td')[1].a['href']
             team_ids.append(url.split('/')[2])
-        
+
     return team_ids
 
 
 players = get_players()
-with open('players.json', 'w') as f:       
+with open('french-players.json', 'w') as f:
     json.dump(players, f)
