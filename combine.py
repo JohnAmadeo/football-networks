@@ -27,5 +27,10 @@ with open('italian-players.json', 'r') as f:
     for team in team_players:
         players[team] = team_players[team]
 
+with open('spanish-players.json', 'r') as f:
+    team_players = json.load(f)
+    for team in team_players:
+        players[team] = team_players[team]
+
 with open('players.json', 'w') as f:
     json.dump(players, f)
